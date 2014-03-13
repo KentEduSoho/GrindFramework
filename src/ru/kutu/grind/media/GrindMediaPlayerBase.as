@@ -2,7 +2,8 @@ package ru.kutu.grind.media {
 
 	import flash.errors.IllegalOperationError;
 	import flash.events.IEventDispatcher;
-	
+	import flash.system.Security;
+
 	import org.osmf.elements.LightweightVideoElement;
 	import org.osmf.events.DisplayObjectEvent;
 	import org.osmf.events.MediaElementEvent;
@@ -33,6 +34,8 @@ package ru.kutu.grind.media {
 		
 		public function GrindMediaPlayerBase(media:MediaElement=null) {
 			super(media);
+			Security.allowDomain("*");
+			Security.allowInsecureDomain("*");
 			addEventListener(DisplayObjectEvent.MEDIA_SIZE_CHANGE, onMediaSizeChange);
 		}
 		

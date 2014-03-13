@@ -1,6 +1,8 @@
 package ru.kutu.grind.views.mediators {
 	
 	import flash.events.Event;
+	import flash.external.ExternalInterface;
+
 	
 	import org.osmf.events.DynamicStreamEvent;
 	import org.osmf.media.MediaElement;
@@ -9,6 +11,7 @@ package ru.kutu.grind.views.mediators {
 	import org.osmf.player.chrome.utils.MediaElementUtils;
 	import org.osmf.traits.DynamicStreamTrait;
 	import org.osmf.traits.MediaTraitType;
+	
 	
 	import ru.kutu.grind.config.LocalSettings;
 	import ru.kutu.grind.events.ControlBarMenuChangeEvent;
@@ -56,6 +59,7 @@ package ru.kutu.grind.views.mediators {
 			if (!media) return;
 			
 			var dynamicResource:DynamicStreamingResource = MediaElementUtils.getResourceFromParentOfType(media, DynamicStreamingResource) as DynamicStreamingResource;
+			ExternalInterface.call('console.log',dynamicResource);
 			if (dynamicResource) {
 				streamItems = dynamicResource.streamItems;
 			} else if (dynamicTrait.numDynamicStreams) {
@@ -155,6 +159,10 @@ package ru.kutu.grind.views.mediators {
 			var dynamicItem:DynamicStreamingItem = item.dynamicItem;
 			if (dynamicItem) {
 				var res:Array = [];
+				if(dynamicItem.streamName != null){
+					 res.push(dynamicItem.streamName);
+					 return res.join(" ");
+				}
 				if (dynamicItem.height > 0) {
 					res.push(dynamicItem.height + "p");
 				}

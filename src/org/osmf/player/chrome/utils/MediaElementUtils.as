@@ -19,6 +19,7 @@
 
 package org.osmf.player.chrome.utils
 {
+	import flash.external.ExternalInterface;
 	import flash.net.URLRequest;
 	import flash.net.URLStream;
 	
@@ -66,10 +67,12 @@ package org.osmf.player.chrome.utils
 			
 			// If we didn't get any result from a higher level proxy
 			// and the current media is of the needed type, return it.
+
 			if (result == null && media.resource is type)
 			{
 				result = media.resource;
 			}
+			
 			
 			return result;
 		}
