@@ -59,7 +59,6 @@ package ru.kutu.grind.views.mediators {
 			if (!media) return;
 			
 			var dynamicResource:DynamicStreamingResource = MediaElementUtils.getResourceFromParentOfType(media, DynamicStreamingResource) as DynamicStreamingResource;
-			ExternalInterface.call('console.log',dynamicResource);
 			if (dynamicResource) {
 				streamItems = dynamicResource.streamItems;
 			} else if (dynamicTrait.numDynamicStreams) {

@@ -19,10 +19,10 @@
 
 package org.osmf.player.chrome.utils
 {
-	import flash.external.ExternalInterface;
 	import flash.net.URLRequest;
 	import flash.net.URLStream;
 	
+	import org.osmf.elements.CompositeElement;
 	import org.osmf.elements.ProxyElement;
 	import org.osmf.media.MediaElement;
 	import org.osmf.media.MediaResourceBase;
@@ -58,12 +58,20 @@ package org.osmf.player.chrome.utils
 		 */ 		
 		public static function getResourceFromParentOfType(media:MediaElement, type:Class):MediaResourceBase
 		{
+			
 			// If the current element is a proxy element, go up
 			var result:MediaResourceBase = null;
+			
+			if(media is CompositeElement ){
+				result = getResourceFromCompositeOfType(media, type);
+			}				
+			
 			if (media.hasOwnProperty("proxiedElement") && (media["proxiedElement"] != null))
 			{				
 				result = getResourceFromParentOfType(media["proxiedElement"], type);
 			}			
+
+
 			
 			// If we didn't get any result from a higher level proxy
 			// and the current media is of the needed type, return it.
@@ -73,8 +81,16 @@ package org.osmf.player.chrome.utils
 				result = media.resource;
 			}
 			
-			
 			return result;
+		}
+		
+		private static function getResourceFromCompositeOfType(media:MediaElement, type:Class):MediaResourceBase
+		{
+			var ttuy:CompositeElement =  media as CompositeElement;
+			for(var i:int =0 ; i< ttuy.numChildren; i++){
+				return getResourceFromParentOfType(ttuy.getChildAt(i), type);
+			}	
+			return null;
 		}
 		
 		public static function getStreamType(media:MediaElement):String
